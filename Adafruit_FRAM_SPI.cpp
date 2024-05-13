@@ -72,10 +72,12 @@ static uint32_t check_supported_device(uint8_t manufID, uint16_t prodID) {
       return _supported_devices[i].size;
   }
 
+#ifdef DEBUG
   Serial.print(F("Unexpected Device: Manufacturer ID = 0x"));
   Serial.print(manufID, HEX);
   Serial.print(F(", Product ID = 0x"));
   Serial.println(prodID, HEX);
+#endif
 
   return 0;
 }
@@ -144,8 +146,10 @@ bool Adafruit_FRAM_SPI::begin(uint8_t nAddressSizeBytes) {
   /* Everything seems to be properly initialised and connected */
   uint32_t fram_size = check_supported_device(manufID, prodID);
 
+#ifdef DEBUG
   Serial.print(F("FRAM Size = 0x"));
   Serial.println(fram_size, HEX);
+#endif
 
   // Detect address size in bytes either 2 or 3 bytes (4 bytes is not supported)
   if (fram_size > 64UL * 1024) {
